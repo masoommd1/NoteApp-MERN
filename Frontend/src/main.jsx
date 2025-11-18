@@ -9,7 +9,6 @@ import Particles from '../Particles/Particles.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-    {/* <Particles/> */}
     <App />
     <Toaster/>
     </BrowserRouter>
