@@ -1,5 +1,6 @@
 import express, { json } from 'express';
 import notesRoutes from './routes/notesRoutes.js';
+import cors from "cors"
 import { connectDB } from './config/db.js';
 import dotenv  from 'dotenv';
 import rateLimiter from './middleware/rateLimiter.js';
@@ -15,6 +16,11 @@ const app = express();
 
 // Example: If you send {"name": "John", "age": 25} in your request, this middleware makes it available as req.body where you can access it like req.body.name and req.body.age
 
+// CORS: Browser security that prevents frontend from calling APIs on different domains
+// Fix: Backend needs to include proper CORS headers to allow your frontend
+app.use(cors({
+  origin: "http://localhost:5173",
+}))
 app.use(express.json());   //this middleware will parse json bodies: req.body
 app.use(rateLimiter);
 
