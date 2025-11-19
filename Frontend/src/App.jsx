@@ -9,9 +9,13 @@ import Particles from "../Particles/Particles";
 
 const App = () => {
   return (
-    <div className="relative h-full w-full ">
-      <div className="absolute inset-0 -z-10 h-full w-[100%] items-center"><Particles/></div>
-      {/* <div className="absolute inset-0 -z-10 h-full w-full items-center"><DotGrid/></div> */}
+    <div className="relative min-h-screen w-full overflow-x-hidden">
+      {/* Background Particles */}
+      <div className="absolute inset-0 -z-10 h-full w-full">
+        <Particles />
+      </div>
+
+      {/* App Routes */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/create" element={<CreatePage />} />
@@ -20,5 +24,6 @@ const App = () => {
     </div>
   );
 };
+
 
 export default App;

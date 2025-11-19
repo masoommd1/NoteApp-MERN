@@ -22,7 +22,7 @@ const NoteCard = ({ note,setNotes }) => {
 
   return (
     <Link
-      to={`/note/${note.id}`}
+      to={`/note/${note._id}`}
       className="card  transition-all hover:shadow-lg duration-200 border-t-4 border-solid border-success"
       style={{ backgroundColor: note.color || "#455a64" }}
     >

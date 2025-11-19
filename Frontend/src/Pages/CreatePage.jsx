@@ -50,15 +50,15 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200">
+    <div className="min-h-screen ">
       <NavBar />
       <div className="container mx-auto px-4 py-8 ">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto ">
           <Link to={"/"} className="btn btn-outline btn-success mb-6">
             <ArrowLeft className="size-5" />
             Back to Notes
           </Link>
-          <div className="card bg-base-100 w-2xl">
+          <div className="card bg-base-200 w-2xl">
             <div className="card-body p-8 space-y-6 w-full max-w-none">
               <h2 className="card-title text-3xl mb-2 text-success font-bold">
                 Create New Note
