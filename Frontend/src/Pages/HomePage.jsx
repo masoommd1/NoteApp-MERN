@@ -48,7 +48,11 @@ const HomePage = () => {
           </div>
         )}
 
-        {notes.length === 0 && !isRateLimited && <NotesNotFound/>}
+        {/* {notes.length === 0 && !isRateLimited && <NotesNotFound/>} */}
+        
+        {/* While loading = true, NotesNotFound is hidden After loading finishes:If notes exist → show NoteCardIf notes are empty → show NotesNotFound */}
+        {!loading && notes.length === 0 && !isRateLimited && <NotesNotFound />}
+
         {notes.length > 0 && !isRateLimited && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
             {notes.map((note) => (

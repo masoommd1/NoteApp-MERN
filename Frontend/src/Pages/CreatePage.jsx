@@ -58,7 +58,7 @@ const CreatePage = () => {
             <ArrowLeft className="size-5" />
             Back to Notes
           </Link>
-          <div className="card bg-base-200 w-2xl">
+          <div className="card bg-base-200/50 w-2xl">
             <div className="card-body p-8 space-y-6 w-full max-w-none">
               <h2 className="card-title text-3xl mb-2 text-success font-bold">
                 Create New Note
