@@ -4,6 +4,7 @@ import cors from "cors"
 import { connectDB } from './config/db.js';
 import dotenv  from 'dotenv';
 import rateLimiter from './middleware/rateLimiter.js';
+import { apiMsg } from './controllers/notesController.js';
 
 dotenv.config()
 const PORT = process.env.PORT || 5000
@@ -30,7 +31,8 @@ app.use((req,res,next)=>{
 })
 
 
-app.use("/api/notes", notesRoutes);  
+app.use("/api/notes", notesRoutes); 
+app.use("/",apiMsg);
 
 // database 
 connectDB().then(()=> {
