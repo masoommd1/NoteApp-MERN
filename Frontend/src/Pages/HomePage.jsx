@@ -12,28 +12,59 @@ const HomePage = () => {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // useEffect(() => {
+  //   const fetchNotes = async () => {
+  //     try {
+  //       // get from axios.js page 
+  //       const res = await api.get("/notes");
+  //       // const data = await res.json()
+  //       console.log(res.data);
+  //       setNotes(res.data);
+  //       setIsrateLimited(false);
+  //     } catch (error) {
+  //       console.log("error fetching notes", error);
+  //       if (error.response.status === 429) {
+  //         setIsrateLimited(true);
+  //       } else {
+  //         toast.error("failed to  load notes");
+  //       }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchNotes();
+  // }, []);
+
   useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        // get from axios.js page 
-        const res = await api.get("/notes");
-        // const data = await res.json()
-        console.log(res.data);
-        setNotes(res.data);
-        setIsrateLimited(false);
-      } catch (error) {
-        console.log("error fetching notes", error);
-        if (error.response.status === 429) {
-          setIsrateLimited(true);
-        } else {
-          toast.error("failed to  load notes");
-        }
-      } finally {
-        setLoading(false);
+  const fetchNotes = async () => {
+    try {
+      const res = await api.get("/notes");
+      console.log(res.data);
+
+      // Always set array
+      setNotes(Array.isArray(res.data) ? res.data : []);
+      setIsrateLimited(false);
+
+    } catch (error) {
+      console.log("error fetching notes", error);
+
+      if (error.response && error.response.status === 429) {
+        setIsrateLimited(true);
+      } else {
+        toast.error("Failed to load notes");
       }
-    };
-    fetchNotes();
-  }, []);
+
+      // Prevent .map crash
+      setNotes([]);
+
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchNotes();
+}, []);
+
 
   return (
     <div className="min-h-screen  text-base-content">
