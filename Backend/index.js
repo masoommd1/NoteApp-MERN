@@ -21,6 +21,7 @@ const app = express();
 // Fix: Backend needs to include proper CORS headers to allow your frontend
 app.use(cors({
   origin: "http://localhost:5173",
+  origin:"https://noteboard-alpha.vercel.app",
 }))
 app.use(express.json());   //this middleware will parse json bodies: req.body
 app.use(rateLimiter);
