@@ -30,7 +30,7 @@ npm install
 ### UPSTASH_REDIS_REST_URL=""
 ### UPSTASH_REDIS_REST_TOKEN=""
 
-## Run the backend server:
+# Run the backend server:
 npm start
 
 ## Navigate to the frontend folder:
