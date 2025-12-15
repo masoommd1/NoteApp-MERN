@@ -1,5 +1,5 @@
-Project Name: Note Board / Todo App
-Brief Description:
+# Project Name: Note Board / Todo App
+## Brief Description:
 
 A simple note-taking application where users can:
 
