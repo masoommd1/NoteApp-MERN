@@ -1,8 +1,8 @@
 import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import NavBar from "../Components/NavBar";
-import { ChromePicker, CirclePicker, SketchPicker } from "react-color";
+import { CirclePicker } from "react-color";
 import toast from "react-hot-toast";
 import api from "../../lib/axios";
 
@@ -10,6 +10,8 @@ const CreatePage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [color, setColor] = useState("");
+  const [status, setStatus] = useState("pending");
+  const [image, setImage] = useState(null); // <-- new state for image
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -25,35 +27,38 @@ const CreatePage = () => {
     }
     setLoading(true);
     try {
-      await api.post("/notes", {
-        title,
-        content,
-        color,
-      });
+      // Use FormData for multipart/form-data
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      formData.append("color", color);
+      formData.append("status", status);
+      if (image) formData.append("image", image); // append image if selected
+
+      await api.post("/notes", formData);
+
       toast.success("Note Created Successfully");
       navigate("/");
     } catch (error) {
       console.log("Error at Creating Notes", error);
-      if(error.response.status === 429){
-        console.log("Slow Down, You are creating Notes Too Fast!",{
-          duration:4000,
-          icon:"💀"
+      if (error.response?.status === 429) {
+        console.log("Slow Down, You are creating Notes Too Fast!", {
+          duration: 4000,
+          icon: "💀",
         });
-      }else{
-
+      } else {
         toast.error("Failed to create notes");
       }
-
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <NavBar />
-      <div className="container mx-auto px-4 py-8 ">
-        <div className="max-w-2xl mx-auto ">
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-2xl mx-auto">
           <Link to={"/"} className="btn btn-outline btn-success mb-6">
             <ArrowLeft className="size-5" />
             Back to Notes
@@ -64,6 +69,7 @@ const CreatePage = () => {
                 Create New Note
               </h2>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Title */}
                 <div className="form-control">
                   <fieldset className="fieldset border-2 border-base-300 rounded-lg p-4 bg-base-200/50">
                     <legend className="fieldset-legend text-lg font-semibold px-2">
@@ -78,6 +84,8 @@ const CreatePage = () => {
                     />
                   </fieldset>
                 </div>
+
+                {/* Content */}
                 <div className="form-control">
                   <fieldset className="fieldset border-2 border-base-300 rounded-lg p-4 bg-base-200/50">
                     <legend className="fieldset-legend text-lg font-semibold px-2">
@@ -92,7 +100,23 @@ const CreatePage = () => {
                     />
                   </fieldset>
                 </div>
-                {/* color picker */}
+
+                {/* Image Upload */}
+                <div className="form-control">
+                  <fieldset className="fieldset border-2 border-base-300 rounded-lg p-4 bg-base-200/50">
+                    <legend className="fieldset-legend text-lg font-semibold px-2">
+                      Image
+                    </legend>
+                    <input
+                      type="file"
+                      className="file-input file-input-bordered w-full mt-3"
+                      accept="image/*"
+                      onChange={(e) => setImage(e.target.files[0])}
+                    />
+                  </fieldset>
+                </div>
+
+                {/* Color picker */}
                 <div className="flex items-center gap-4 p-4 border-2 border-base-300 rounded-lg bg-base-200/50">
                   <label className="font-semibold text-lg whitespace-nowrap">
                     Choose Color:
@@ -110,6 +134,34 @@ const CreatePage = () => {
                   ></div>
                 </div>
 
+                {/* Status */}
+                <div className="flex gap-6 mt-3 items-center justify-around">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="status"
+                      value="pending"
+                      className="radio mask-radial-to-warning-content"
+                      checked={status === "pending"}
+                      onChange={(e) => setStatus(e.target.value)}
+                    />
+                    <span className="font-medium">Pending</span>
+                  </label>
+
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="status"
+                      value="completed"
+                      className="radio radio-success"
+                      checked={status === "completed"}
+                      onChange={(e) => setStatus(e.target.value)}
+                    />
+                    <span className="font-medium">Completed</span>
+                  </label>
+                </div>
+
+                {/* Submit */}
                 <div className="card-actions justify-center pt-4">
                   <button
                     type="submit"

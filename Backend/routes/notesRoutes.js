@@ -1,12 +1,24 @@
-import express from 'express';
-import { createNotes, deleteNotes, getAllNotes, updateNotes,getNoteById } from '../controllers/notesController.js';
+import express from "express";
+import upload from "../middleware/multer.js";
+import {
+  createNotes,
+  deleteNotes,
+  getAllNotes,
+  updateNotes,
+  getNoteById,
+} from "../controllers/notesController.js";
 
-const Router = express.Router();
+const router = express.Router();
 
-Router.get("/", getAllNotes)
-Router.get("/:id", getNoteById) 
-Router.post("/", createNotes)
-Router.put("/:id", updateNotes)
-Router.delete("/:id", deleteNotes)
+router.get("/", getAllNotes);
+router.get("/:id", getNoteById);
 
-export default Router;
+// create note with image
+router.post("/", upload.single("image"), createNotes);
+
+// update note with optional image
+router.put("/:id", upload.single("image"), updateNotes);
+
+router.delete("/:id", deleteNotes);
+
+export default router;
