@@ -25,10 +25,10 @@ cd backend
 npm install
 
 ## Setup .env file in backend:
-PORT=5000
-MONGO_URI=<your-mongodb-connection-string>
-UPSTASH_REDIS_REST_URL=""
-UPSTASH_REDIS_REST_TOKEN=""
+### PORT=5000
+### MONGO_URI=<your-mongodb-connection-string>
+### UPSTASH_REDIS_REST_URL=""
+### UPSTASH_REDIS_REST_TOKEN=""
 
 ## Run the backend server:
 npm start
