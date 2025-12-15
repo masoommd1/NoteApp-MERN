@@ -12,7 +12,7 @@ const app = express();
 
 // CORS
 app.use(cors({ origin: "http://localhost:5173",
-  origin:"https://noteboard-alpha.vercel.app",
+  // origin:"https://noteboard-alpha.vercel.app",
  }));
 
 // Serve uploaded images
